@@ -5,6 +5,7 @@ import frc.robot.commands.JoystickOperation;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 import edu.wpi.first.wpilibj.SpeedController;
@@ -33,7 +34,8 @@ public class Drivetrain extends Subsystem
 	public double currentAngle; 
 	//private double[] ypr;
 	
-	//This method for driving during the teleop phase requires the two doubles provided by the JoystickOperation Command 
+	//This method for driving during the teleop phase requires the two doubles provided by the JoystickOperation Command
+	
 	public void ArcadeDrive(double throttle, double rotation)
 	{
 		drive.arcadeDrive(throttle, rotation);
@@ -140,10 +142,37 @@ public class Drivetrain extends Subsystem
     	
     	//BaseMotorController[] SCS = new BaseMotorController[] {Robot.robotmap.FR, Robot.robotmap.FL, Robot.robotmap.BR, Robot.robotmap.BL};
 		
+		//Enable current limiting and voltage ramp
+
+		setupMotor(Robot.robotmap.FL);
+		setupMotor(Robot.robotmap.BL);
+		setupMotor(Robot.robotmap.FR);
+		setupMotor(Robot.robotmap.BR);
+
 		/*for(int i = 0; i < SCS .length; i++) {
 			SCS[i].enableVoltageCompensation(false);
 			SCS[i].configVoltageCompSaturation(12, 20);
 			SCS[i].configOpenloopRamp(0.35, 5);
 		}*/
-    }
+	}
+	
+
+	/* This function writes to Talon SRX config settings. 
+	Just removing this call doesn't disable this functionality.
+	Comment this code and uncomment the comment ode to disable.*/
+	private void setupMotor(WPI_TalonSRX controller) {
+		controller.configOpenloopRamp(0.35);
+
+		controller.configPeakCurrentLimit(41);
+		controller.configPeakCurrentDuration(1);
+		controller.configContinuousCurrentLimit(40);
+		controller.enableCurrentLimit(true);
+
+		// controller.configOpenloopRamp(0);
+
+		// controller.enableCurrentLimit(false);
+		// controller.configPeakCurrentLimit(0);
+		// controller.configPeakCurrentDuration(0);
+		// controller.configContinuousCurrentLimit(0);
+	}
 }

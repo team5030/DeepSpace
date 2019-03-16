@@ -17,6 +17,9 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANError;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
@@ -61,6 +64,8 @@ public class RobotMap {
 
    public DigitalInput ElevatorBottomSwitch = new DigitalInput(1);
 
+   public UsbCamera usbCamera = CameraServer.getInstance().startAutomaticCapture("Cam 0", 0);  
+
    public RobotMap() {
       FL = new WPI_TalonSRX(0);
       FR = new WPI_TalonSRX(2);
@@ -85,8 +90,9 @@ public class RobotMap {
 
       IMU = new PigeonIMU(BL);
 
+      usbCamera.setResolution(320, 240);
+      usbCamera.setFPS(15);
       
-
    }
 
 
