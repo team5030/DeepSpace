@@ -10,10 +10,14 @@ package frc.robot;
 
 //Import all commands for binding
 import frc.robot.commands.*;
-import frc.robot.commands.Climber.ClimberFirstPos;
+import frc.robot.commands.Climber.ExtendLifters;
+import frc.robot.commands.Climber.RetractBackLifters;
 import frc.robot.commands.Climber.ClimberOff;
+import frc.robot.commands.Climber.ExtendBackLifters;
+import frc.robot.commands.Climber.ExtendFrontLifters;
 import frc.robot.commands.Climber.ExtendLifters;
 import frc.robot.commands.Climber.RetractLifters;
+import frc.robot.commands.Climber.RetractFrontLifters;
 import frc.robot.commands.Intake.*;
 
 //Import all subsytems
@@ -32,10 +36,12 @@ public class OI
 	
 	//Instantiate, create, and name Driver Joystick
 	public static Joystick driver = new Joystick(0);
-	public Button driveBackward = new TriggerButton(driver, this.LT, .2);
-	public Button driveForward = new TriggerButton(driver, this.RT, .2);
-	public Button driverA = new JoystickButton(driver, 1);
-	public Button driverY = new JoystickButton(driver, 4);
+	public Button driverClimbAll = new JoystickButton(driver, 1);
+	public Button driverRetractAll = new JoystickButton(driver, 4);
+	public Button driverClimbFront = new JoystickButton(driver, 5); //LB
+	public Button driverClimbBack = new JoystickButton(driver, 6); //RB
+	public Button driverRetractFront = new JoystickButton(driver, 3); 
+	public Button driverRetractBack = new JoystickButton(driver, 2);
 	public Button driverDPadUp = new Button(){
 		@Override
 		public boolean get() {
@@ -70,16 +76,15 @@ public class OI
 		ballIn.whenPressed(new IntakeBall());
 		ballOut.whenPressed(new ReleaseBall());		
 		piston.whileHeld(new IntakeHatch());
-		
-		//climb
-		// stopClimb.whenPressed(new ClimberOff());
-		// climb.whenPressed(new ClimberFirstPos());
 
-		// driverA.whileHeld(new RetractLifters(driver));
-		// driverDPadDown.whileHeld(new RetractLifters(driver));
-
-		// driverY.whileHeld(new ExtendLifters(driver));
-		// driverDPadUp.whileHeld(new ExtendLifters(driver));		
+		//Climber
+		driverClimbAll.whenPressed(new ExtendLifters(driver));
+		driverRetractAll.whenPressed(new RetractLifters(driver));
+		driverClimbFront.whenPressed(new ExtendFrontLifters(driver));
+		driverClimbBack.whenPressed(new ExtendBackLifters(driver));
+		driverRetractFront.whenPressed(new RetractFrontLifters(driver));
+		driverRetractBack.whenPressed(new RetractBackLifters(driver));
+			
 	}
 	
 }

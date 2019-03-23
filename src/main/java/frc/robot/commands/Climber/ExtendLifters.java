@@ -8,6 +8,7 @@ public class ExtendLifters extends Command {
     private Joystick stick;
 
     public ExtendLifters(Joystick joystick) {
+        requires(Robot.climberSubsytem);
         stick = joystick;
     }
 
