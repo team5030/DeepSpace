@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Spark;
 
 import com.revrobotics.CANEncoder;
@@ -46,14 +47,10 @@ public class RobotMap {
    public WPI_TalonSRX wrist;
 
    //CLIMB
-   public CANSparkMax C_LeftTop;
-   public CANEncoder E_LeftTop;
-   public CANSparkMax C_LeftBottom;
-   public CANEncoder E_LeftBottom;
-   public CANSparkMax C_RightTop;
-   public CANEncoder E_RightTop;
-   public CANSparkMax C_RightBottom;
-   public CANEncoder E_RightBottom;
+   public WPI_TalonSRX C_LeftTop;
+   public WPI_TalonSRX C_LeftBottom;
+   public WPI_TalonSRX C_RightTop;
+   public WPI_TalonSRX C_RightBottom;
 
    //Holder
    public DoubleSolenoid hatchSolenoid = new DoubleSolenoid(6, 7);
@@ -79,14 +76,10 @@ public class RobotMap {
       To stop it from doing this, set the boolean to true. */
       elev.overrideLimitSwitchesEnable(false);
 
-      C_LeftTop = new CANSparkMax(11, MotorType.kBrushless);
-      E_LeftTop = C_LeftTop.getEncoder();
-      C_LeftBottom = new CANSparkMax(10, MotorType.kBrushless);
-      E_LeftBottom = C_LeftBottom.getEncoder();
-      C_RightTop = new CANSparkMax(8, MotorType.kBrushless);
-      E_RightTop = C_RightTop.getEncoder();
-      C_RightBottom = new CANSparkMax(9, MotorType.kBrushless);
-      E_RightBottom = C_RightBottom.getEncoder();
+      C_LeftTop = new WPI_TalonSRX(11);
+      C_LeftBottom = new WPI_TalonSRX(10);
+      C_RightTop = new WPI_TalonSRX(8);
+      C_RightBottom = new WPI_TalonSRX(9);
 
       IMU = new PigeonIMU(BL);
 
